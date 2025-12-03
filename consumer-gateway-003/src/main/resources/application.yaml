@@ -1,0 +1,64 @@
+server:
+  port: 8086
+spring:
+#  main:
+#    web-application-type: reactive
+  application:
+    name: consumer-gateway-003
+  cloud:
+    nacos:
+      server-addr: 192.168.20.200:7071,192.168.20.200:7073,192.168.20.200:7075
+      username: nacos
+      password: nacos
+    gateway:
+      routes:
+#        - id: test_route
+#          uri: lb://provider-config-002-8083
+#          predicates:
+#            - After=2025-12-25T23:59:59+08:00[Asia/Shanghai]  # 在这个时间之后的请求都匹配
+#            - Before=2025-12-25T23:59:59+08:00[Asia/Shanghai]  # 在这个时间之前的请求都匹配
+#            - Between=2025-10-25T23:59:59+08:00[Asia/Shanghai],2025-12-28T23:59:59+08:00[Asia/Shanghai] # 在两个时间之间的请求都匹配
+#            - Cookie=chocolate, abc  # 请求中必须添加cookie，必须 是属性名为chocolate，值为abc，的请求才会匹配
+#            - Header=X-Request-Id, \d+ # \d+ 是一个正则表达式，表示支持一个或多个数子
+#            - Host=**.somehost.org,**.anotherhost.org  # 当域名是somehost.org或者anotherhost.org 结尾的都会匹配，将请求转发到uri。
+#            - Method=GET # 必须是GET请求才会匹配
+#            - Path=/**  # 任何请求都会转发到uri，最终请求的是：lb://provider-config-002-8083/**
+#            - Query=color,blue # 第一个表示请求参数名，第二个表示这个参数的值，不写表示任何的值都行，支持正则
+        - id: weight_high
+          uri: lb://provider-config-002-8083
+          predicates:
+            - Weight=group1,8  # 在同一个权重组（group1）内，按比例将流量分发到不同的后端服务。
+        - id: weight_low
+          uri: lb://provider-config-002-8083
+          predicates:
+            - Weight=group1,2  # 在同一个权重组（group1）内，按比例将流量分发到不同的后端服务。
+
+
+#          - id: jd_route
+#            uri: lb://provider-config-002-8083/test/dynamicReceiveConfig
+#            predicates:
+#            - Path=/** # 输入http:<gateway地址>/jd -> 跳转到 http://jd.com
+#        - id: before_route
+#          uri: lb://provider-config-002-8083/test/dynamicReceiveConfig
+#          predicates:
+##            - Before=2025-12-25T23:59:59+08:00[Asia/Shanghai]
+#            - Path=/**
+logging:
+  level:
+#    root: debug
+    org.springframework.cloud.loadbalancer: DEBUG
+    org.springframework.cloud.gateway: DEBUG
+    org.springframework.cloud.gateway.handler.RoutePredicateHandlerMapping: DEBUG
+    reactor.netty.http.client: DEBUG                     # 看真实 HTTP 请求
+#        - id: bd_route
+#          uri: http://baidu.com
+#          predicates:
+#            - Path=/bd
+#        - id: tb_route
+#          uri: http://taobao.com
+#          predicates:
+#            - Path=/tb  # 输入http:<gateway地址>/jd -> 跳转到 http://taobao.com
+#        - id: jd_route
+#          uri: http://jd.com
+#          predicates:
+#            - Path=/jd # 输入http:<gateway地址>/jd -> 跳转到 http://jd.com
