@@ -1,0 +1,25 @@
+server:
+  port: 8083
+spring:
+  application:
+    name: provider-config-002-8083 # 对应 Data ID 前缀
+  profiles:
+    active: prod
+  cloud:
+    nacos:
+      config:
+        file-extension: yaml #  配置格式，最终 Data ID = ${spring.application.name}.yaml
+        shared-configs:
+          - data-id: fccd7bf7-7600-4bc6-88b7-48f04929e7e6 # nacos config中的 Data Id
+          - group: DEFAULT_GROUP
+        extension-configs:
+          - data-id: xxxx # 加载nacos中的其他配置文件
+          - group: xxxx #  哪个分组
+      server-addr: 192.168.20.200:7071,192.168.20.200:7073,192.168.20.200:7075
+      username: nacos
+      password: nacos
+  config:
+    import:
+#      - optional:nacos:${spring.application.name}.${spring.cloud.nacos.config.file-extension}
+      - optional:nacos:${spring.application.name}-${spring.profiles.active}.${spring.cloud.nacos.config.file-extension}
+

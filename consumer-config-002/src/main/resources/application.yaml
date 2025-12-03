@@ -1,0 +1,29 @@
+server:
+  port: 8082
+spring:
+  application:
+    name: consumer-config-8082
+  cloud:
+    openfeign:
+      client:
+        config:
+          default: # 全局的超时时间
+            read-timeout: 10 # 远程调用响应时间
+            connect-timeout: 10 # 全局的服务连接时间
+          provider-config-002-8083: # 针对某个服务的超时时间设置
+            read-timeout: 10
+            connect-timeout: 20
+      compression:
+        request:
+          enabled: true
+          mime-types: text/xml, application/xml, application/json
+          min-request-size: 1000
+        response:
+          enabled: true
+    nacos:
+      config:
+        file-extension: yaml
+      server-addr: 192.168.20.200:7071,192.168.20.200:7073,192.168.20.200:7075
+  config:
+    import:
+      - optional:nacos:${spring.application.name}.${spring.cloud.nacos.config.file-extension}
