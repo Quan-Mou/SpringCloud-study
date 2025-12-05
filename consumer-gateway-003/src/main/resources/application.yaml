@@ -7,11 +7,35 @@ spring:
     name: consumer-gateway-003
   cloud:
     nacos:
-      server-addr: 192.168.20.200:7071,192.168.20.200:7073,192.168.20.200:7075
+      server-addr: 192.168.20.200:8848,192.168.20.200:7071,192.168.20.200:7073,192.168.20.200:7075
       username: nacos
       password: nacos
     gateway:
+      globalcors:
+        cors-configurations:
+          '[/**]':
+            allowedOrigins: "*"
+            allowedMethods:
+              - GET
+              - POST
+      discovery:
+        locator:
+          enabled: true
       routes:
+        - id: test_filter_route
+          uri: lb://provider-config-002-8083
+          predicates:
+            - Path=/**
+          filters:
+            - AddRequestHeader=x-request-color,blue
+            - AddRequestHeader=abc, 122
+            - AddRequestParameter=red, blue
+            - AddResponseHeader=X-Response-Red, grey
+      default-filters:
+      - AddHeader=customGatewayFilterFactory,123123123123123123
+#      - AddResponseHeader=defaultFilterAddHeader,权某
+
+
 #        - id: test_route
 #          uri: lb://provider-config-002-8083
 #          predicates:
@@ -24,14 +48,22 @@ spring:
 #            - Method=GET # 必须是GET请求才会匹配
 #            - Path=/**  # 任何请求都会转发到uri，最终请求的是：lb://provider-config-002-8083/**
 #            - Query=color,blue # 第一个表示请求参数名，第二个表示这个参数的值，不写表示任何的值都行，支持正则
-        - id: weight_high
-          uri: lb://provider-config-002-8083
-          predicates:
-            - Weight=group1,8  # 在同一个权重组（group1）内，按比例将流量分发到不同的后端服务。
-        - id: weight_low
-          uri: lb://provider-config-002-8083
-          predicates:
-            - Weight=group1,2  # 在同一个权重组（group1）内，按比例将流量分发到不同的后端服务。
+#        - id: weight_high
+#          uri: lb://provider-config-002-8083
+#          predicates:
+#            - Weight=group1,8  # 在同一个权重组（group1）内，按比例将流量分发到不同的后端服务。
+#        - id: weight_low
+#          uri: lb://provider-config-002-8083
+#          predicates:
+#            - Weight=group1,2  # 在同一个权重组（group1）内，按比例将流量分发到不同的后端服务。
+#        - id: custom_auth_route
+#          uri: lb://provider-config-002-8083
+#          predicates:
+#            - Auth=quan,123
+#        - id: custom_token_route
+#          uri: lb://provider-config-002-8083
+#          predicates:
+#            - Token=abc
 
 
 #          - id: jd_route

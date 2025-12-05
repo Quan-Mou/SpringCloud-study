@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+    <div id="btn">点击发送网络请求</div>
+
+    <div id="result"></div>
+
+    <script>
+        let element = document.querySelector("#btn");
+        let result = document.querySelector("#result");
+
+        element.addEventListener("click",function () {
+            fetch('http://127.0.0.1:8086/test/dynamicReceiveConfig?author=abc')
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Network response was not ok');
+                    }
+                    return response.json(); // 或 response.text()
+                })
+                .then(data => {
+                    console.log('Success:', data);
+                    result.innerHTML = JSON.stringify(data);
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                });
+        })
+    </script>
+</body>
+</html>

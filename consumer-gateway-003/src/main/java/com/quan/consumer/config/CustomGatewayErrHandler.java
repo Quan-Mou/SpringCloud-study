@@ -21,6 +21,9 @@ import reactor.core.publisher.Mono;
 import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 
+/**
+ * 自定义网关错误处理
+ */
 @Component
 @Order(-1)
 public class CustomGatewayErrHandler implements ErrorWebExceptionHandler {
@@ -44,13 +47,4 @@ public class CustomGatewayErrHandler implements ErrorWebExceptionHandler {
         return response.writeWith(Mono.just(buffer));
     }
 
-//    @Override
-//    public Mono<Void> handle(ServerWebExchange exchange, Throwable ex) {
-//        ex.printStackTrace();
-//        String message = ex.getMessage();
-//        ServerHttpResponse response = exchange.getResponse();
-//        String body = "{msg:"+message+",code:"+400+"}";
-//        DataBuffer buffer = response.bufferFactory().wrap(body.getBytes(Charset.forName("utf-8")));
-//        return response.writeWith(Mono.just(buffer));
-//    }
 }

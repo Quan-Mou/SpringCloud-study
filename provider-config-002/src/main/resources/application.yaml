@@ -15,7 +15,7 @@ spring:
         extension-configs:
           - data-id: xxxx # 加载nacos中的其他配置文件
           - group: xxxx #  哪个分组
-      server-addr: 192.168.20.200:7071,192.168.20.200:7073,192.168.20.200:7075
+      server-addr: 192.168.20.200:8848,192.168.20.200:7071,192.168.20.200:7073,192.168.20.200:7075
       username: nacos
       password: nacos
   config:
