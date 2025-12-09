@@ -20,5 +20,6 @@ public class Vip implements Serializable {
 
     private String birth;
 
+
     private static final long serialVersionUID = 1L;
 }

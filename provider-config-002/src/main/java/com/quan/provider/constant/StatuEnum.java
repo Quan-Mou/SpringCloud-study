@@ -17,6 +17,14 @@ public enum StatuEnum {
 
     UPDATE(400,"修改失败");
 
+    public Integer getCode() {
+        return code;
+    }
+
+    public String getMsg() {
+        return msg;
+    }
+
     private Integer code;
     private String msg;
 

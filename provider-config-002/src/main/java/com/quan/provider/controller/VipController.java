@@ -78,11 +78,11 @@ public class VipController {
      * @return
      */
     @GetMapping("/list/{pageNO}")
-    public R1<PageInfo<Vip>> list(@PathVariable("pageNO") Integer pageNO) {
+    public R2<PageInfo<Vip>> list(@PathVariable("pageNO") Integer pageNO) {
         PageHelper.startPage(pageNO,2);
         List<Vip> vips = vipService.list();
         PageInfo<Vip> vipPageInfo = new PageInfo<>(vips);
-        return R1.OK(vipPageInfo);
+        return R2.OK(vipPageInfo);
     }
 
 //    @GetMapping("/vip/list/{pageNO}")

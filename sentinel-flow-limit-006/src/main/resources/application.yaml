@@ -1,0 +1,32 @@
+server:
+  port: 8085
+spring:
+  application:
+    name: sentinel-flow-006
+  cloud:
+    openfeign:
+      lazy-attributes-resolution: true
+    nacos:
+      config:
+        file-extension: yaml
+      server-addr: 192.168.20.200:8848
+      username: nacos
+      password: nacos
+    sentinel:
+      transport:
+        port: 8719
+        dashboard: localhost:8888
+      eager: true
+      web-context-unify: false
+  #  main:
+#    web-application-type: reactive
+  config:
+    import:
+      - optional:nacos:${spring.application.name}.${spring.cloud.nacos.config.file-extension}
+#      eager: true # 解饿加载
+logging:
+  level:
+    root: error
+feign:
+  sentinel:
+    enabled: true

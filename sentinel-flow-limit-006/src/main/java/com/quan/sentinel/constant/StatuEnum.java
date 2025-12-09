@@ -5,7 +5,6 @@ import lombok.Getter;
 
 
 //@Getter
-@AllArgsConstructor
 @Getter
 public enum StatuEnum {
 
@@ -20,4 +19,19 @@ public enum StatuEnum {
     private Integer code;
     private String msg;
 
+    public Integer getCode() {
+        return code;
+    }
+
+    public String getMsg() {
+        return msg;
+    }
+
+    StatuEnum() {
+    }
+
+    StatuEnum(Integer code, String msg) {
+        this.code = code;
+        this.msg = msg;
+    }
 }

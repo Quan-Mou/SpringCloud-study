@@ -33,8 +33,31 @@ public class R2<T> {
     }
 
 
+    public String getMsg() {
+        return msg;
+    }
 
-//   失败的方法
+    public void setMsg(String msg) {
+        this.msg = msg;
+    }
+
+    public Integer getCode() {
+        return code;
+    }
+
+    public void setCode(Integer code) {
+        this.code = code;
+    }
+
+    public T getData() {
+        return data;
+    }
+
+    public void setData(T data) {
+        this.data = data;
+    }
+
+    //   失败的方法
     public static <T> R2<T> fail(){
         R2<T> r = new R2<>();
         r.setCode(StatuEnum.FAIL.getCode());
