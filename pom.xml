@@ -5,8 +5,10 @@
     <groupId>com.quan</groupId>
     <artifactId>SpringCloud-study</artifactId>
     <version>0.0.1-SNAPSHOT</version>
+    <packaging>pom</packaging>
     <name>SpringCloud-study</name>
     <description>SpringCloud-study</description>
+
 
     <properties>
         <java.version>17</java.version>
