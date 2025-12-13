@@ -1,0 +1,22 @@
+server:
+  port: 8081
+spring:
+  application:
+    name: seata-stock-010
+  cloud:
+    nacos:
+      discovery:
+        server-addr: 192.168.20.200:8848
+        username: nacos
+        password: nacos
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    username: root
+    password: zqh123123123
+    url: jdbc:mysql://localhost:3306/springboot
+logging:
+  level:
+    root: debug
+mybatis:
+  configuration:
+    map-underscore-to-camel-case: true

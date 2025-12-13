@@ -84,3 +84,58 @@ spring:
 
 
 
+
+
+
+# 分布式事务环境搭建
+
+## 数据库信息
+
+~~~mysql
+CREATE TABLE `account` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `account` varchar(255) NOT NULL COMMENT '账户名',
+  `balance` decimal(10,2) NOT NULL COMMENT '余额',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+
+CREATE TABLE `goods` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `name` varchar(255) NOT NULL COMMENT '商品名称',
+  `price` decimal(10,2) NOT NULL COMMENT '商品价格',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+CREATE TABLE `order` (
+  `id` int(10) unsigned zerofill NOT NULL AUTO_INCREMENT,
+  `goods_id` int NOT NULL COMMENT '商品id',
+  `amount` decimal(10,2) NOT NULL COMMENT '订单 金额',
+  `count` int NOT NULL COMMENT '订单数量',
+  `account_id` int DEFAULT NULL COMMENT '账户id',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+CREATE TABLE `stock` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `count` int NOT NULL COMMENT '库存数量',
+  `goods_id` int NOT NULL COMMENT '商品id',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+~~~
+
+
+
+## 创建微服务工程
+
+1.  [seata-account-010](seata-account-010) 账户服务
+2.  [seata-order-010](seata-order-010)  订单服务
+3.  [seata-stock-010](seata-stock-010)  库存服务
+4.  [seata-business-010](seata-business-010)  调用入口
+
+
+
+
+
+
+
